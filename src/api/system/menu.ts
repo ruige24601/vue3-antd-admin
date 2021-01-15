@@ -1,9 +1,10 @@
-import http from '@/utils/http/axios';
+import http from '@/utils/http/axios'
+import http2 from '@/utils/request'
 import {
   GetByUserIdParams,
   GetMenuListByUserIdResult,
   GetAuthCodeByUserIdResult,
-} from './model/menuModel';
+} from './model/menuModel'
 
 enum Api {
   adminMenus = '/admin/menus',
@@ -14,10 +15,10 @@ enum Api {
  * @description: 根据用户id获取用户菜单
  */
 export function adminMenus() {
-  return http.request<GetMenuListByUserIdResult>({
+  return http2.request<GetMenuListByUserIdResult>({
     url: Api.adminMenus,
     method: 'GET',
-  });
+  })
 }
 
 /**
@@ -29,5 +30,5 @@ export function getBtnCodeListByUserId(params: GetByUserIdParams) {
     url: Api.GetBtnCodeListByUserId,
     method: 'GET',
     params,
-  });
+  })
 }

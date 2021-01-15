@@ -2,7 +2,7 @@ export interface ResultBody<T> {
   code: string
   message: string
   timestamp: number
-  responseBody: T
+  responseEntity: T
   responsePagination?: ResponsePagination
   _status?: string
   _headers?: string

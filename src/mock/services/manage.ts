@@ -28,7 +28,7 @@ const serverList = options => {
   }
 
   return builder({
-    responseBody: result,
+    responseEntity: result,
     responsePagination: {
       pageSize: pageSize,
       pageNo: pageNo,

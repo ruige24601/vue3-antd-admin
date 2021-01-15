@@ -7,11 +7,11 @@ import {
   setupAntd,
   setupDirectives,
   setupGlobalMethods,
-  setupCustomComponents
+  setupCustomComponents,
 } from '@/plugins/'
 // WARNING: `mockjs` NOT SUPPORT `IE` PLEASE DO NOT USE IN `production` ENV.
 import './mock'
-
+import './styles/theme.less'
 const app = createApp(App)
 
 // 注册全局常用的ant-design-vue组件

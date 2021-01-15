@@ -1,3 +1,8 @@
+export enum RequestPrefix {
+  API = '/api',
+  DEFAULT_PREFIX = '/api',
+}
+
 /**
  * @description: 请求结果集
  */

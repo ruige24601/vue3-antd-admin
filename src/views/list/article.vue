@@ -280,11 +280,7 @@ export default {
 
     const loadData = parameter => {
       const requestParameters = Object.assign({}, parameter, state.queryParam)
-      console.log(state.queryParam)
-      console.log('loadData request parameters:', requestParameters)
       return getServiceList(requestParameters).then(res => {
-        console.log('getServiceList(requestParameters).then(res => {')
-        console.log(res)
         return res
       })
     }

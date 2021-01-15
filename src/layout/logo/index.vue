@@ -1,18 +1,18 @@
 <template>
   <div class="logo">
-    <img src="~@/assets/images/logo.png" alt="">
-    <h2 v-show="!collapsed" class="title">One Piece</h2>
+    <img src="~@/assets/images/logo.png" alt="" />
+    <h3 v-show="!collapsed" class="title">建设银行报智慧媒体系统</h3>
   </div>
 </template>
 
 <script>
 export default {
-  name: "index",
+  name: 'index',
   props: {
     collapsed: {
-      type: Boolean
-    }
-  }
+      type: Boolean,
+    },
+  },
 }
 </script>
 
@@ -32,7 +32,6 @@ export default {
   }
 
   .title {
-    color: white;
     margin-bottom: 0;
   }
 }

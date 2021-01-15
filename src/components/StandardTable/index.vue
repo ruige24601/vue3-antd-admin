@@ -65,7 +65,7 @@ export default defineComponent({
       }
       state.loading = true
       const {
-        responseBody,
+        responseEntity,
         responsePagination,
       }: ResultBody<any> = await props
         .getListFunc(params)
@@ -75,7 +75,7 @@ export default defineComponent({
           pageSize: responsePagination.pageSize,
           total: responsePagination.totalCount,
         })
-      state.dataSource = responseBody
+      state.dataSource = responseEntity
     }
 
     refreshTableData()

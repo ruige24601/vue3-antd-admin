@@ -1,14 +1,14 @@
 import { ResultBody, ResponsePagination } from '@/types/base'
 
 interface BuilderData {
-  responseBody?: any
-  responsePagination: ResponsePagination
+  responseEntity?: any
+  responsePagination?: ResponsePagination
 }
 
 const resultBody: ResultBody<any> = {
   message: '',
   timestamp: 0,
-  responseBody: null,
+  responseEntity: null,
   responsePagination: undefined,
   code: '0',
 }
@@ -19,7 +19,7 @@ export const builder = (
   code = '0',
   headers = {}
 ) => {
-  resultBody.responseBody = data.responseBody
+  resultBody.responseEntity = data.responseEntity
   resultBody.responsePagination = data.responsePagination
   if (message !== undefined && message !== null) {
     resultBody.message = message

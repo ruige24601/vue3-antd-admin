@@ -1,6 +1,7 @@
 <template>
   <ALayoutHeader class="layout-header">
     <div class="left-options">
+      <Logo></Logo>
       <!-- <span
         @click="() => $emit('update:collapsed', !collapsed)"
         class="menu-fold"
@@ -9,6 +10,7 @@
           :is="collapsed ? 'menu-unfold-outlined' : 'menu-fold-outlined'"
         />
       </span> -->
+      <HeaderMenu class="headerMenu"></HeaderMenu>
       <!-- <a-breadcrumb>
         <template v-for="routeItem in route.matched" :key="routeItem.name">
           <a-breadcrumb-item>
@@ -68,10 +70,12 @@ import { message, Modal } from 'ant-design-vue'
 import { QuestionCircleOutlined } from '@ant-design/icons-vue'
 import { useStore } from 'vuex'
 import { TABS_ROUTES } from '@/store/mutation-types'
+import HeaderMenu from './HeaderMenu.vue'
+import Logo from '../logo/index.vue'
 
 export default defineComponent({
   name: 'PageHeader',
-  components: { ...components },
+  components: { ...components, HeaderMenu, Logo },
   props: {
     collapsed: {
       type: Boolean,
@@ -185,6 +189,8 @@ export default defineComponent({
   padding: 0;
   height: $header-height;
 
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 2px;
+
   .left-options {
     display: flex;
     align-items: center;
@@ -192,6 +198,13 @@ export default defineComponent({
     .menu-fold {
       padding: 0 24px;
       cursor: pointer;
+    }
+    .headerMenu {
+      line-height: inherit;
+      align-self: stretch;
+      border-bottom-color: transparent;
+      background-color: transparent;
+      margin-left: 8px;
     }
   }
 
