@@ -132,6 +132,15 @@
         <a @click="handleSub(record)">订阅报警</a>
       </template>
     </StandardTable>
+
+    <CreateForm
+      ref="createModal"
+      v-model:visible="visible"
+      :model="mdl"
+      @submitOk="$refs.tableRef.refreshTableData()"
+    ></CreateForm>
+    <!-- @cancel="handleCancel" -->
+    <!-- @ok="handleOk" -->
   </div>
 </template>
 
@@ -162,7 +171,9 @@ import {
 // import StandardTable from '@/components/standard-table/table'
 import StandardTable from '@/components/StandardTable'
 import Ellipsis from '@/components/Ellipsis/index.tsx'
-import { getRoleList, getServiceList } from '@/api/manage'
+import * as API from '@/api/manage'
+import CreateForm from './CreateForm.vue'
+import { RequestPagination } from '@/types/base'
 
 interface State {
   advanced: boolean
@@ -238,6 +249,7 @@ const dataSource = [
 ]
 
 export default {
+  name: 'article-list',
   components: {
     // [Row.name]: Row,
     Row,
@@ -259,17 +271,21 @@ export default {
     Ellipsis,
     [Badge.name]: Badge,
     [Divider.name]: Divider,
+    CreateForm,
   },
   setup() {
-    const state: State = reactive({
+    const state = reactive({
       // 高级搜索 展开/关闭
       advanced: false,
       // 查询参数
       queryParam: {
         id: '',
       },
+      visible: false,
+      mdl: {},
     })
     const tableRef = ref()
+    const createModal = ref()
 
     function toggleAdvanced() {
       state.advanced = !state.advanced
@@ -278,15 +294,51 @@ export default {
     const statusFilter = type => statusMap[type].text
     const statusTypeFilter = type => statusMap[type].status
 
-    const loadData = parameter => {
-      const requestParameters = Object.assign({}, parameter, state.queryParam)
-      return getServiceList(requestParameters).then(res => {
+    const loadData = (parameter: RequestPagination) => {
+      return API.getServiceList({
+        requestPagination: {
+          ...parameter,
+        },
+        requestEntity: {
+          ...state.queryParam,
+        },
+      }).then(res => {
         return res
       })
     }
     const handleReset = () => {
       state.queryParam = {}
       tableRef.value.refreshTableData()
+    }
+    const handleAdd = () => {
+      state.mdl = {}
+      state.visible = true
+    }
+    const handleEdit = record => {
+      state.visible = true
+      state.mdl = { ...record }
+    }
+
+    const handleCancel = () => {
+      state.visible = false
+
+      const form = createModal.value.formRef
+      form.resetFields() // 清理表单数据（可不做）
+    }
+
+    const handleOk = () => {
+      console.log('===article')
+
+      const form = createModal.value.formRef
+      form
+        .validateFields()
+        .then(values => {
+          console.log('values', state.mdl)
+        })
+        .catch(error => {
+          console.log('error', error)
+        })
+      state.visible = false
     }
 
     return {
@@ -300,41 +352,14 @@ export default {
       loadData,
       handleReset,
       tableRef,
+      handleAdd,
+      handleEdit,
+      handleCancel,
+      handleOk,
+      createModal,
     }
   },
 }
 </script>
 
-<style lang="less">
-.table-page-search-wrapper {
-  .ant-form-inline {
-    .ant-form-item {
-      display: flex;
-      margin-bottom: 24px;
-      margin-right: 0;
-
-      .ant-form-item-control-wrapper {
-        flex: 1 1;
-        display: inline-block;
-        vertical-align: middle;
-      }
-
-      > .ant-form-item-label {
-        line-height: 32px;
-        padding-right: 8px;
-        width: auto;
-      }
-      .ant-form-item-control {
-        height: 32px;
-        line-height: 32px;
-      }
-    }
-  }
-
-  .table-page-search-submitButtons {
-    display: block;
-    margin-bottom: 24px;
-    white-space: nowrap;
-  }
-}
-</style>
+<style lang="less"></style>

@@ -5,7 +5,11 @@
     @click="clickMenuItem"
   >
     <a-menu-item v-for="item in menus" :key="item.name">
-      <icon-font :type="item.meta.icon" />
+      <icon-font
+        :type="item.meta.icon"
+        v-if="typeof item.meta.icon === 'string'"
+      />
+      <component :is="item.meta.icon" v-else />
       {{ item.meta.title }}
     </a-menu-item>
   </a-menu>

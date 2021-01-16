@@ -1,6 +1,5 @@
-import http from '@/utils/http/axios';
-import {RequestEnum} from '@/enums/httpEnum'
-
+import { RequestEnum } from '@/enums/httpEnum'
+import http from '@/utils/request'
 enum Api {
   adminDictConfig = '/admin/dict_config',
 }
@@ -14,7 +13,7 @@ export function getAdminDictConfig(params) {
     url: Api.adminDictConfig,
     method: RequestEnum.GET,
     params,
-  });
+  })
 }
 
 /**
@@ -25,10 +24,7 @@ export function delAdminDictConfig(id: string) {
   return http.request({
     url: [Api.adminDictConfig, id].join('/'),
     method: RequestEnum.DELETE,
-  }, {
-    isShowErrorMessage: true, // 是否显示错误提示信息
-    successMessageText: '删除成功'
-  });
+  })
 }
 
 /**
@@ -40,12 +36,8 @@ export function patchAdminDictConfig(id, params) {
     url: [Api.adminDictConfig, id].join('/'),
     method: RequestEnum.PATCH,
     params,
-  }, {
-    isShowErrorMessage: true, // 是否显示错误提示信息
-    successMessageText: '修改成功'
-  });
+  })
 }
-
 
 /**
  * 新建账号
@@ -56,8 +48,5 @@ export function postAdminDictConfig(params) {
     url: Api.adminDictConfig,
     method: RequestEnum.POST,
     params,
-  }, {
-    isShowErrorMessage: true, // 是否显示错误提示信息
-    successMessageText: '创建成功'
-  });
+  })
 }

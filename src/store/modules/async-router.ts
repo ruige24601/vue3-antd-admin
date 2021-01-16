@@ -3,10 +3,12 @@
  */
 // import { constantRouterMap } from '@/config/router.config'
 import { Module } from 'vuex'
-import { generatorDynamicRouter } from '@/router/generator-routers'
-import staticRoutes from '@/router/common'
+import { generatorDynamicRouter as generatorDynamicMenus } from '@/router/generator-routers'
+import staticRoutes from '@/router/static'
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+
 const state = {
-  addRouters: [],
+  dynamicMenus: [] as RouteRecordRaw[],
   menus: staticRoutes,
 }
 
@@ -16,14 +18,18 @@ const asyncRouter: Module<StateType, any> = {
   namespaced: true,
   state,
   mutations: {
-    SET_ROUTERS: (state, routers) => {
-      state.menus = routers
+    SET_DYNAMIC_MENUS: (state, dynamicMenus) => {
+      state.dynamicMenus = dynamicMenus
+    },
+    SET_MENUS: (state, menus) => {
+      state.menus = menus
     },
   },
   actions: {
     async GenerateRoutes({ commit }) {
-      const routers = await generatorDynamicRouter()
-      commit('SET_ROUTERS', routers)
+      const dynamicMenus = await generatorDynamicMenus()
+      commit('SET_MENUS', [...staticRoutes, ...dynamicMenus])
+      commit('SET_DYNAMIC_MENUS', dynamicMenus)
     },
   },
 }

@@ -14,13 +14,13 @@ const resultBody: ResultBody<any> = {
 }
 
 export const builder = (
-  data: BuilderData,
+  data?: BuilderData,
   message?,
   code = '0',
   headers = {}
 ) => {
-  resultBody.responseEntity = data.responseEntity
-  resultBody.responsePagination = data.responsePagination
+  resultBody.responseEntity = data?.responseEntity
+  resultBody.responsePagination = data?.responsePagination
   if (message !== undefined && message !== null) {
     resultBody.message = message
   }
@@ -33,6 +33,7 @@ export const builder = (
     typeof headers === 'object' &&
     Object.keys(headers).length > 0
   ) {
+    // @ts-ignore
     resultBody._headers = headers
   }
   resultBody.timestamp = new Date().getTime()

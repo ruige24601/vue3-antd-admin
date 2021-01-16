@@ -1,3 +1,4 @@
+import { RequestBody, ResultBody } from '@/types/base'
 import request from '@/utils/request'
 // import http from '@/utils/http/axios'
 // const request = http.request
@@ -29,11 +30,51 @@ export function getRoleList(parameter) {
   })
 }
 
-export function getServiceList(parameter) {
-  return request({
+// export function getServiceList(parameter) {
+//   return request({
+//     url: api.service,
+//     method: 'get',
+//     params: parameter,
+//   })
+// }
+
+export function getServiceList(
+  parameter: RequestBody<any>
+): Promise<ResultBody<any>> {
+  return request.request({
     url: api.service,
-    method: 'get',
-    params: parameter,
+    method: 'post',
+    data: parameter,
+  })
+}
+
+export function queryServiceDetail(
+  parameter: RequestBody<any>
+): Promise<ResultBody<any>> {
+  return request.request({
+    url: api.service + '/detail',
+    method: 'post',
+    data: parameter,
+  })
+}
+
+export function serviceUpdate(
+  parameter: RequestBody<any>
+): Promise<ResultBody<any>> {
+  return request.request({
+    url: api.service + '/update',
+    method: 'post',
+    data: parameter,
+  })
+}
+
+export function serviceAdd(
+  parameter: RequestBody<any>
+): Promise<ResultBody<any>> {
+  return request.request({
+    url: api.service + '/add',
+    method: 'post',
+    data: parameter,
   })
 }
 

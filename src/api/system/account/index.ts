@@ -1,5 +1,5 @@
-import http from '@/utils/http/axios';
-import {RequestEnum} from '@/enums/httpEnum'
+import { RequestEnum } from '@/enums/httpEnum'
+import http from '@/utils/request'
 
 enum Api {
   adminAccount = '/admin/account',
@@ -14,9 +14,7 @@ export function getAdminAccount(params) {
     url: Api.adminAccount,
     method: RequestEnum.GET,
     params,
-  }, {
-    isShowErrorMessage: true
-  });
+  })
 }
 
 /**
@@ -27,10 +25,7 @@ export function delAdminAccount(id: string) {
   return http.request({
     url: [Api.adminAccount, id].join('/'),
     method: RequestEnum.DELETE,
-  }, {
-    isShowErrorMessage: true, // 是否显示错误提示信息
-    successMessageText: '删除成功'
-  });
+  })
 }
 
 /**
@@ -42,12 +37,8 @@ export function patchAdminAccount(id, params) {
     url: [Api.adminAccount, id].join('/'),
     method: RequestEnum.PATCH,
     params,
-  }, {
-    isShowErrorMessage: true, // 是否显示错误提示信息
-    successMessageText: '修改成功'
-  });
+  })
 }
-
 
 /**
  * 新建账号
@@ -58,8 +49,5 @@ export function postAdminAccount(params) {
     url: Api.adminAccount,
     method: RequestEnum.POST,
     params,
-  }, {
-    isShowErrorMessage: true, // 是否显示错误提示信息
-    successMessageText: '新建成功'
-  });
+  })
 }

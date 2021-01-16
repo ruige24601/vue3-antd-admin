@@ -1,5 +1,5 @@
-import http from '@/utils/http/axios'
-import http2 from '@/utils/request'
+import { ResultBody } from '@/types/base'
+import http from '@/utils/request'
 import {
   GetByUserIdParams,
   GetMenuListByUserIdResult,
@@ -8,27 +8,14 @@ import {
 
 enum Api {
   adminMenus = '/admin/menus',
-  GetBtnCodeListByUserId = '/getBtnCodeListByUserId',
 }
 
 /**
  * @description: 根据用户id获取用户菜单
  */
-export function adminMenus() {
-  return http2.request<GetMenuListByUserIdResult>({
+export function adminMenus(): Promise<ResultBody<GetMenuListByUserIdResult>> {
+  return http.request({
     url: Api.adminMenus,
     method: 'GET',
-  })
-}
-
-/**
- * 根据用户Id获取权限编码
- * @param params
- */
-export function getBtnCodeListByUserId(params: GetByUserIdParams) {
-  return http.request<GetAuthCodeByUserIdResult>({
-    url: Api.GetBtnCodeListByUserId,
-    method: 'GET',
-    params,
   })
 }

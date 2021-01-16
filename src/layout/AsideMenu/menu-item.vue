@@ -1,6 +1,10 @@
 <template>
   <template v-if="!menuInfo.meta.hidden">
-    <a-sub-menu v-if="menuInfo.children?.length" :key="menuInfo.name" v-bind="$attrs">
+    <a-sub-menu
+      v-if="menuInfo.children?.length"
+      :key="menuInfo.name"
+      v-bind="$attrs"
+    >
       <template v-slot:title>
         <span>
           <icon-font style="color: aliceblue" :type="menuInfo.meta.icon" />
@@ -15,28 +19,32 @@
           </a-menu-item>
         </template>
         <template v-else>
-          <menu-item :menu-info="item" :key="item.name"/>
+          <menu-item :menu-info="item" :key="item.name" />
         </template>
       </template>
     </a-sub-menu>
     <a-menu-item v-else :key="menuInfo.name">
-      <icon-font style="color: aliceblue" :type="menuInfo.meta.icon" />
-      {{menuInfo.meta.title}}
+      <icon-font
+        :type="menuInfo?.meta?.icon"
+        v-if="typeof menuInfo?.meta?.icon === 'string'"
+      />
+      <component :is="menuInfo.meta.icon" v-else />
+      {{ menuInfo.meta.title }}
     </a-menu-item>
   </template>
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
-import {Menu} from 'ant-design-vue'
-import {IconFont} from '@/components/iconfont'
+import { defineComponent } from 'vue'
+import { Menu } from 'ant-design-vue'
+import { IconFont } from '@/components/iconfont'
 
 export default defineComponent({
-  name: "menu-item",
+  name: 'menu-item',
   components: {
     IconFont,
     'a-sub-menu': Menu.SubMenu,
-    'a-menu-item': Menu.Item
+    'a-menu-item': Menu.Item,
   },
   props: {
     menuInfo: {
@@ -47,6 +55,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

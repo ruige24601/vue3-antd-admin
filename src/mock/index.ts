@@ -21,6 +21,7 @@ if (
   require('./services/tagCloud')
   require('./services/article')
   require('./services/menu')
+  require('./services/account')
 
   Mock.setup({
     timeout: 800, // setter delay time

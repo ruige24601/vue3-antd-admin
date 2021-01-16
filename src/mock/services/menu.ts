@@ -3,33 +3,6 @@ import { builder } from '../util'
 
 const menus = [
   {
-    id: 66,
-    url: '/white',
-    sort: 1,
-    icon: 'icon-zhuxingtu',
-    keepAlive: 1,
-    parentId: -1,
-    name: '白皮书',
-  },
-  {
-    id: 67,
-    url: '/open',
-    sort: 1,
-    icon: '',
-    keepAlive: 1,
-    parentId: 66,
-    name: 'open',
-  },
-  {
-    id: 68,
-    url: '/newPage',
-    sort: 1,
-    icon: 'icon-yun',
-    keepAlive: 1,
-    parentId: -1,
-    name: '新模块',
-  },
-  {
     id: 2,
     url: 'system/account',
     sort: 2,

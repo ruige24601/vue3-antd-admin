@@ -11,7 +11,7 @@ const routes: Array<RouteRecordRaw> = [
     name: '/system',
     // name: routeName,
     redirect: '/system/account',
-    component: h(markRaw(RouterTransition), { notNeedKey: true }),
+    component: RouterTransition,
     meta: {
       title: '系统管理',
       icon: 'icon-zhuxingtu',
