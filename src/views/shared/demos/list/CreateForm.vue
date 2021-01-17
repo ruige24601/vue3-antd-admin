@@ -56,7 +56,7 @@
   </a-modal>
 </template>
 
-<script>
+<script lang="ts">
 import {
   computed,
   defineComponent,
@@ -80,6 +80,7 @@ import {
 import { useForm } from '@ant-design-vue/use'
 import * as API from './service'
 import moment from 'moment'
+import { ServiceDetail } from './data'
 
 const statusMap = {
   0: {
@@ -138,7 +139,7 @@ export default defineComponent({
     const state = reactive({
       loading: false,
     })
-    const formModel = reactive({
+    const formModel: ServiceDetail = reactive({
       id: '',
       no: '',
       description: '',
@@ -167,9 +168,9 @@ export default defineComponent({
       const res = await API.queryServiceDetail({
         requestEntity: record,
       }).finally(() => (state.loading = false))
-      res.responseEntity.updateAt =
-        res.responseEntity.updateAt && moment(res.responseEntity.updateAt)
-      Object.assign(formModel, res.responseEntity)
+      const updatedAt =
+        res.responseEntity.updatedAt && moment(res.responseEntity.updatedAt)
+      Object.assign(formModel, res.responseEntity, { updatedAt })
     }
     watch(
       () => props.model,

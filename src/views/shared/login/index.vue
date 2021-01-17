@@ -88,7 +88,6 @@ export default defineComponent({
         return message.warning('用户名或密码不能为空！')
       const hide = message.loading('登录中...', 0)
       state.loading = true
-      console.log(state.formInline)
       const params = {
         username,
         password,

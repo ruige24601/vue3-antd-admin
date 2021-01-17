@@ -113,21 +113,21 @@
       :columns="columns"
       :getListFunc="loadData"
     >
-      <template #serial="{text, record, index}">
+      <template #serial="{index}">
         <span>
           {{ index + 1 }}
         </span>
       </template>
-      <template #description="{text, record, index}">
+      <template #description="{text}">
         <Ellipsis :length="4" tooltip>{{ text }}</Ellipsis>
       </template>
-      <template #status="{text, record, index}">
+      <template #status="{text}">
         <a-badge :status="statusTypeFilter(text)" :text="statusFilter(text)" />
       </template>
-      <template #action="{text, record}">
+      <template #action="{record}">
         <a @click="handleEdit(record)">配置</a>
         <a-divider type="vertical" />
-        <a @click="handleSub(record)">订阅报警</a>
+        <a>订阅报警</a>
       </template>
     </StandardTable>
 
@@ -137,14 +137,10 @@
       :model="mdl"
       @submitOk="tableRef.refreshTableData()"
     ></CreateForm>
-    <!-- @cancel="handleCancel" -->
-    <!-- @ok="handleOk" -->
   </div>
 </template>
 
-<script lang="ts">
-import http from '@/utils/http/axios'
-import { RequestEnum } from '@/enums/httpEnum'
+<script lang="tsx">
 import {
   Row,
   Col,
@@ -159,7 +155,7 @@ import {
   Input,
   Form,
 } from 'ant-design-vue'
-import { reactive, ref, toRefs } from 'vue'
+import { reactive, ref, toRefs, h } from 'vue'
 import {
   UpOutlined,
   DownOutlined,
@@ -167,20 +163,25 @@ import {
   DeleteOutlined,
   LockOutlined,
 } from '@ant-design/icons-vue'
-// import StandardTable from '@/components/standard-table'
-// import StandardTable from '@/components/standard-table/table'
-import StandardTable from '@/components/StandardTable'
-import Ellipsis from '@/components/Ellipsis/index.tsx'
+import StandardTable from '@/components/StandardTable/index.vue'
+import Ellipsis from '@/components/Ellipsis'
 import * as API from './service'
 import CreateForm from './CreateForm.vue'
 import { RequestPagination } from '@/types/base'
-
+import { QueryParam, TableItem } from './data'
+import { ColumnProps } from 'ant-design-vue/es/table/interface'
 interface State {
+  mdl: Partial<TableItem>
   advanced: boolean
-  queryParam: any
+  queryParam: QueryParam
+  visible: boolean
 }
-
-const columns = [
+interface Column extends ColumnProps {
+  slots?: {
+    customRender: string
+  }
+}
+const columns: Column[] = [
   {
     title: '#',
     slots: { customRender: 'serial' },
@@ -193,12 +194,17 @@ const columns = [
     title: '描述',
     dataIndex: 'description',
     slots: { customRender: 'description' },
+    // customRender: ({ text }) => (
+    //   <Ellipsis length={4} tooltip>
+    //     {text}
+    //   </Ellipsis>
+    // ),
+    // customRender: ({ text }) => h(Ellipsis, { length: 4 }, text),
   },
   {
     title: '服务调用次数',
     dataIndex: 'callNo',
     sorter: true,
-    needTotal: true,
     customRender: ({ text }) => text + ' 次',
   },
   {
@@ -238,16 +244,6 @@ const statusMap = {
   },
 }
 
-const dataSource = [
-  {
-    no: 1,
-    description: '这是一段描述这是一段描述',
-    callNo: 100,
-    status: '1',
-    updatedAt: '2010-01-01',
-  },
-]
-
 export default {
   name: 'article-list',
   components: {
@@ -277,7 +273,7 @@ export default {
     CreateForm,
   },
   setup() {
-    const state = reactive({
+    const state: State = reactive({
       // 高级搜索 展开/关闭
       advanced: false,
       // 查询参数
@@ -317,31 +313,9 @@ export default {
       state.mdl = {}
       state.visible = true
     }
-    const handleEdit = record => {
-      state.visible = true
+    const handleEdit = (record: TableItem) => {
       state.mdl = { ...record }
-    }
-
-    const handleCancel = () => {
-      state.visible = false
-
-      const form = createModal.value.formRef
-      form.resetFields() // 清理表单数据（可不做）
-    }
-
-    const handleOk = () => {
-      console.log('===article')
-
-      const form = createModal.value.formRef
-      form
-        .validateFields()
-        .then(values => {
-          console.log('values', state.mdl)
-        })
-        .catch(error => {
-          console.log('error', error)
-        })
-      state.visible = false
+      state.visible = true
     }
 
     return {
@@ -349,7 +323,6 @@ export default {
       state,
       toggleAdvanced,
       columns,
-      dataSource,
       statusFilter,
       statusTypeFilter,
       loadData,
@@ -357,8 +330,6 @@ export default {
       tableRef,
       handleAdd,
       handleEdit,
-      handleCancel,
-      handleOk,
       createModal,
     }
   },

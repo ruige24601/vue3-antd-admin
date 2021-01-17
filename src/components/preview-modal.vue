@@ -4,40 +4,68 @@
       <close-circle-outlined @click="isVisible = false" class="close-icon" />
       <div class="preview-content" :style="contentStyle">
         <a-spin :spinning="loading">
-          <img @load.stop="imgLoaded" v-if="type === 'image'" ref="img" :style="imgStyle" :src="url"
-               alt=""/>
-          <video ref="video" @canplay="loading = false" @loadstart="loading = true" v-if="type === 'video'" :src="url"
-                 controls autoplay></video>
+          <img
+            @load.stop="imgLoaded"
+            v-if="type === 'image'"
+            ref="img"
+            :style="imgStyle"
+            :src="url"
+            alt=""
+          />
+          <video
+            ref="video"
+            @canplay="loading = false"
+            @loadstart="loading = true"
+            v-if="type === 'video'"
+            :src="url"
+            controls
+            autoplay
+          ></video>
           <div ref="imgScaleMask" class="img-scale-mask">
             {{ ~~(imgScale * 100) + '%' }}
           </div>
         </a-spin>
       </div>
       <div v-if="type === 'image'" class="toolbar">
-        <zoom-in-outlined @click="zoomInImg" title="放大"/>
-        <zoom-out-outlined @click="zoomOutImg" title="缩放"/>
+        <zoom-in-outlined @click="zoomInImg" title="放大" />
+        <zoom-out-outlined @click="zoomOutImg" title="缩放" />
         <one-to-one-outlined @click="resetImg" title="原始比例" />
-        <redo-outlined @click="rotateImg" title="旋转"/>
-        <download-outlined @click="saveImg(url)" title="下载"/>
+        <redo-outlined @click="rotateImg" title="旋转" />
+        <download-outlined @click="saveImg(url)" title="下载" />
       </div>
     </div>
   </teleport>
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType, reactive, toRefs, ref, computed} from 'vue'
-import {Spin} from 'ant-design-vue'
-import {ZoomInOutlined, ZoomOutOutlined, RedoOutlined, DownloadOutlined,OneToOneOutlined, CloseCircleOutlined} from '@ant-design/icons-vue'
-import {downloadByUrl} from "@/utils/downloadFile";
+import { defineComponent, PropType, reactive, toRefs, ref, computed } from 'vue'
+import { Spin } from 'ant-design-vue'
+import {
+  ZoomInOutlined,
+  ZoomOutOutlined,
+  RedoOutlined,
+  DownloadOutlined,
+  OneToOneOutlined,
+  CloseCircleOutlined,
+} from '@ant-design/icons-vue'
+import { downloadByUrl } from '@/utils/downloadFile'
 
 export default defineComponent({
   name: 'preview-modal',
   emits: ['update:visible'],
-  components: {ZoomInOutlined, ZoomOutOutlined, RedoOutlined, DownloadOutlined, CloseCircleOutlined,OneToOneOutlined, [Spin.name]: Spin},
+  components: {
+    ZoomInOutlined,
+    ZoomOutOutlined,
+    RedoOutlined,
+    DownloadOutlined,
+    CloseCircleOutlined,
+    OneToOneOutlined,
+    [Spin.name]: Spin,
+  },
   props: {
     visible: {
       type: Boolean as PropType<boolean>,
-      default: false
+      default: false,
     },
     type: {
       type: String as PropType<string>,
@@ -46,9 +74,9 @@ export default defineComponent({
     url: {
       type: String as PropType<string>,
       default: '',
-    }
+    },
   },
-  setup(props, {emit}) {
+  setup(props, { emit }) {
     // 图片蒙层
     const imgScaleMask = ref<any>(null)
 
@@ -62,20 +90,21 @@ export default defineComponent({
       scaleCV: 0.07, // 缩放的系数
       initWidth: 0, // 图片初始宽高
       initHeight: 0, // 图片初始宽高
-      contentStyle: { // 默认大小
+      contentStyle: {
+        // 默认大小
         width: '60vw',
-        height: '60vh'
+        height: '60vh',
       } as any,
       imgStyle: {
         width: '',
         height: '',
-        transform: 'rotate(0)'
-      } as any
+        transform: 'rotate(0)',
+      } as any,
     })
 
     const isVisible = computed({
       get: () => props.visible,
-      set: (val) => emit('update:visible', val )
+      set: val => emit('update:visible', val),
     })
 
     // 旋转图片
@@ -84,12 +113,11 @@ export default defineComponent({
       state.imgStyle.transform = `rotate(${state.rotateDeg}deg)`
     }
     // 保存图片
-    const saveImg = (url) => {
-      downloadByUrl({url})
+    const saveImg = url => {
+      downloadByUrl({ url })
     }
     // 处理图片缩放比
     const handZoom = (type = 'scale') => {
-      console.log(state.imgScale)
       state.imgStyle.width = state.initWidth * state.imgScale + 'px'
       state.imgStyle.height = state.initHeight * state.imgScale + 'px'
       if (type === 'init') {
@@ -100,7 +128,10 @@ export default defineComponent({
         state.imgStyle.maxHeight = 'none!important'
       }
       clearTimeout(timer)
-      timer = setTimeout(() => imgScaleMask.value.classList.remove('active'), 1400)
+      timer = setTimeout(
+        () => imgScaleMask.value.classList.remove('active'),
+        1400
+      )
       imgScaleMask.value.classList.add('active')
       state.contentStyle = {}
     }
@@ -121,14 +152,13 @@ export default defineComponent({
     }
 
     // 图片加载完成后获取初始宽高
-    const imgLoaded = (e) => {
+    const imgLoaded = e => {
       if (e.currentTarget?.complete) {
-        const {width, height} = getComputedStyle(e.currentTarget)
+        const { width, height } = getComputedStyle(e.currentTarget)
         state.imgStyle.width = width
         state.imgStyle.height = height
         state.initWidth = parseFloat(width)
         state.initHeight = parseFloat(height)
-        console.log(state.imgStyle, '图片加载完毕')
       }
     }
 
@@ -142,9 +172,9 @@ export default defineComponent({
       zoomOutImg,
       handZoom,
       imgLoaded,
-      resetImg
+      resetImg,
     }
-  }
+  },
 })
 </script>
 
@@ -155,7 +185,7 @@ export default defineComponent({
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, .4);
+  background-color: rgba(0, 0, 0, 0.4);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -177,16 +207,16 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, .05);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.05);
 
-  img, video {
+  img,
+  video {
     max-width: 100%;
     max-height: 100%;
     outline: none;
   }
 
   video {
-
   }
 
   .img-scale-mask {
@@ -200,7 +230,7 @@ export default defineComponent({
     padding: 8px 22px;
     text-align: center;
     border-radius: 12px;
-    background-color: rgba(0, 0, 0, .6);
+    background-color: rgba(0, 0, 0, 0.6);
     user-select: none;
 
     &.active {
@@ -219,10 +249,10 @@ export default defineComponent({
   border-radius: 30px;
   display: flex;
   align-items: center;
-  background-color: rgba(109,109,109,.6);
-  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .08);
+  background-color: rgba(109, 109, 109, 0.6);
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.08);
 
-  > .anticon  {
+  > .anticon {
     padding: 3px 8px;
     cursor: pointer;
     color: white;

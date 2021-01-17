@@ -91,8 +91,6 @@ export default defineComponent({
 
     const router = useRouter()
     const route = useRoute()
-    console.log(route.matched)
-    console.log(router.getRoutes(), 'currentRoute')
 
     // 退出登录
     const doLogout = () => {

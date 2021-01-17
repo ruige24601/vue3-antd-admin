@@ -64,7 +64,6 @@ export const createStorage = ({
      * @param {string} key
      */
     remove(key: string) {
-      console.log(key, '搜索')
       this.storage.removeItem(this.getKey(key))
     }
 

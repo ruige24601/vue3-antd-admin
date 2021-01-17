@@ -1,4 +1,3 @@
-// import Tooltip from 'ant-design-vue/es/tooltip'
 import { cutStrByFullLength, getStrFullLength } from '@/components/_util/util'
 import { defineComponent } from 'vue'
 import { Tooltip } from 'ant-design-vue'

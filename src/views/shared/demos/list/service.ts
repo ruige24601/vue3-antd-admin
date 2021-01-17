@@ -1,8 +1,8 @@
 import { RequestBody, ResultBody } from '@/types/base'
 import http from '@/utils/request'
-
+import { QueryParam, ServiceDetail } from './data'
 export function getServiceList(
-  parameter: RequestBody<any>
+  parameter: RequestBody<QueryParam>
 ): Promise<ResultBody<any>> {
   return http.request({
     url: '/service/list',
@@ -13,7 +13,7 @@ export function getServiceList(
 
 export function queryServiceDetail(
   parameter: RequestBody<any>
-): Promise<ResultBody<any>> {
+): Promise<ResultBody<ServiceDetail>> {
   return http.request({
     url: '/service/detail',
     method: 'post',

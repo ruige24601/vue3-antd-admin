@@ -160,7 +160,6 @@ export default defineComponent({
     })
 
     const tabsList = computed(() => store.getters.tabsList)
-    console.log(tabsList.value, 'tabsList')
 
     const whiteList = ['Redirect', 'login']
 

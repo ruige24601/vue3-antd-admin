@@ -24,7 +24,7 @@ if (
     importAll(require.context('@/mock', true, /\.(ts|js)x?$/))
     importAll(require.context('@/views', true, /_mock\.(ts|js)x?$/))
   } catch (error) {
-    console.log('自动导入 mock 数据失败：', error)
+    console.error('自动导入 mock 数据失败：', error)
   }
 
   Mock.setup({

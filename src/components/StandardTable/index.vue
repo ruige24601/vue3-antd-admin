@@ -1,10 +1,10 @@
 <template>
   <a-table
+    v-bind="$props"
     :data-source="dataSource"
     :pagination="pageOption"
     :loading="loading"
     @change="paginationChange"
-    v-bind="{ ...$props, ...$attrs }"
   >
     <!--  自定义slots start-->
     <template v-for="(value, key) in $slots" v-slot:[key]="slotProps">
@@ -16,11 +16,15 @@
 <script lang="ts">
 import { defineComponent, reactive, PropType, toRefs } from 'vue'
 import { Card, Select, Table, Popconfirm, message } from 'ant-design-vue'
-import { ColumnProps, TableProps } from 'ant-design-vue/lib/table/interface'
+import {
+  ColumnProps,
+  tableProps,
+  TableProps,
+} from 'ant-design-vue/lib/table/interface'
 import { PaginationProps } from 'ant-design-vue/lib/pagination/Pagination'
 import { usePages } from '@/hooks'
-import useDragCol from '../dynamic-table/utils/useDragCol'
 import { ResultBody, ResponsePagination } from '@/types/base'
+import T from 'ant-design-vue/es/table/Table'
 
 type PageOption = Partial<typeof PaginationProps>
 
@@ -31,8 +35,8 @@ interface Props extends TableProps {
 }
 
 export default defineComponent({
-  name: 'dynamic-table',
-  props: Object.assign({}, TableProps, {
+  name: 'StandardTable',
+  props: Object.assign({}, tableProps, {
     getListFunc: {
       // 获取列表数据函数API
       type: Function,
@@ -47,7 +51,7 @@ export default defineComponent({
   components: {
     [Table.name]: Table,
   },
-  setup(props: Props, { attrs, emit, slots }) {
+  setup(props, { attrs, emit, slots }) {
     const { pageOption } = usePages()
     const state = reactive({
       dataSource: [], // 表格数据
@@ -68,7 +72,7 @@ export default defineComponent({
         responseEntity,
         responsePagination,
       }: ResultBody<any> = await props
-        .getListFunc(params)
+        .getListFunc?.(params)
         .finally(() => (state.loading = false))
       responsePagination &&
         Object.assign(state.pageOption, {

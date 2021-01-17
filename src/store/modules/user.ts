@@ -47,7 +47,6 @@ const user: Module<UserStateType, any> = {
           .then(response => {
             const { result, code, message } = response
             if (code == 0) {
-              console.log(result.token)
               Storage.set(ACCESS_TOKEN, result.token, 7 * 24 * 60 * 60 * 1000)
               Storage.set(CURRENT_USER, result, 7 * 24 * 60 * 60 * 1000)
               commit('SET_TOKEN', result.token)
