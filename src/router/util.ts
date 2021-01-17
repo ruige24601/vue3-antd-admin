@@ -31,14 +31,14 @@ const list2tree = (items, parentId = -1): Array<RouteRecordRaw> => {
  * 动态生成菜单
  * @returns {Promise<Router[]>}
  */
-export const generatorDynamicRouter = async () => {
+export const generatorDynamicMenus = async () => {
   const result = await adminMenus()
-  const routeList = list2tree(result.responseEntity)
-  routeList.forEach(item => {
+  const menuTree = list2tree(result.responseEntity)
+  menuTree.forEach(item => {
     // 设置模块重定向到菜单
     if ((item?.children?.length as number) > 0 && !item.redirect) {
       item.redirect = { name: item.children?.[0].name }
     }
   })
-  return routeList
+  return menuTree
 }

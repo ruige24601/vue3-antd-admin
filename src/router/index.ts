@@ -3,10 +3,10 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import { createRouterGuards } from './router-guards'
 import 'nprogress/nprogress.css' // 进度条样式
 
-import staticRoutes from './static'
 import { App, markRaw } from 'vue'
 
-import dynamicRoutes from './dynamic/system'
+import staticRoutes from './static'
+import dynamicRoutes from './dynamic'
 import { RouterTransition } from '@/components/transition'
 
 export const routes: Array<RouteRecordRaw> = [
@@ -25,11 +25,7 @@ export const routes: Array<RouteRecordRaw> = [
     name: 'login',
     component: () => import('@/views/shared/login/index.vue'),
   },
-  {
-    path: '/icons',
-    name: 'icons',
-    component: () => import('@/views/shared/icons/index.vue'),
-  },
+
   {
     path: '/error',
     name: 'error',

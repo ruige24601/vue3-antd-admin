@@ -18,7 +18,7 @@ const defaultRoutePath = '/dashboard'
 const isGetMenus = debounce(
   async ({ to, from, next }) => {
     return await store
-      .dispatch('async-router/GenerateRoutes')
+      .dispatch('menus/GenerateRoutes')
       .then(() => next())
       .catch(() => next({ path: defaultRoutePath }))
   },
@@ -34,7 +34,7 @@ export function createRouterGuards(router: Router) {
       if (to.name === 'login') {
         next({ path: defaultRoutePath })
       } else {
-        if (store.state['async-router'].dynamicMenus.length === 0) {
+        if (store.state.menus.dynamicMenus.length === 0) {
           await isGetMenus({ to, from, next })
         } else {
           next()

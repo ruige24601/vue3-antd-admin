@@ -74,9 +74,11 @@ import {
   InputNumber,
   DatePicker,
   message,
+  Modal,
+  Input,
 } from 'ant-design-vue'
 import { useForm } from '@ant-design-vue/use'
-import * as API from '@/api/manage'
+import * as API from './service'
 import moment from 'moment'
 
 const statusMap = {
@@ -119,6 +121,8 @@ export default defineComponent({
     ASelectOption: Select.Option,
     [InputNumber.name]: InputNumber,
     [DatePicker.name]: DatePicker,
+    [Modal.name]: Modal,
+    [Input.name]: Input,
   },
   props: {
     // visible: {

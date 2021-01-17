@@ -1,5 +1,5 @@
 import Mock from 'mockjs2'
-import { builder } from '../util'
+import { builder } from './_util'
 
 const menus = [
   {

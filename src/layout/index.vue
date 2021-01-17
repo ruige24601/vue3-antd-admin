@@ -15,10 +15,11 @@
         <aside-menu :collapsed="collapsed" />
         <!--      侧边菜单栏end-->
       </a-layout-sider>
-      <a-layout>
+      <a-layout class="main-layout">
         <!--      内容区域start-->
         <a-layout-content class="layout-content">
-          <tabs-view />
+          <!-- <tabs-view /> -->
+          <a-card><router-transition /></a-card>
         </a-layout-content>
         <!--      内容区域end-->
         <!--      页脚start-->
@@ -31,12 +32,13 @@
 
 <script lang="ts">
 import { defineComponent, ref, h, computed, provide } from 'vue'
-import { Layout, message } from 'ant-design-vue'
+import { Layout, message, Card } from 'ant-design-vue'
 import Logo from './logo/index.vue'
 import { TabsView } from './tabs'
 import AsideMenu from './AsideMenu/index.vue'
 import PageHeader from './header/index.vue'
 import PageFooter from './footer'
+import { RouterTransition } from '@/components/transition'
 
 export default defineComponent({
   name: 'Layout',
@@ -49,6 +51,8 @@ export default defineComponent({
     [Layout.name]: Layout,
     [Layout.Content.name]: Layout.Content,
     [Layout.Sider.name]: Layout.Sider,
+    RouterTransition,
+    [Card.name]: Card,
   },
   setup() {
     const collapsed = ref<boolean>(false)
@@ -83,9 +87,13 @@ export default defineComponent({
   .ant-layout {
     overflow: hidden;
   }
-
+  .main-layout {
+    height: calc(100vh - 64px);
+    overflow: auto;
+  }
   .layout-content {
     flex: none;
+    padding: 20px 14px 0;
   }
 }
 </style>

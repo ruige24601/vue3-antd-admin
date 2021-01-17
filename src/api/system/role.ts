@@ -1,5 +1,6 @@
-import http from '@/utils/http/axios';
-import {RequestEnum} from '@/enums/httpEnum'
+import http from '@/utils/request'
+
+import { RequestEnum } from '@/enums/httpEnum'
 
 enum Api {
   adminRole = '/admin/role',
@@ -14,7 +15,7 @@ export function getAdminRoleAccess(id?: string | number) {
   return http.request({
     url: [Api.adminRoleAccess, id].join('/'),
     method: RequestEnum.GET,
-  });
+  })
 }
 
 /**
@@ -26,7 +27,7 @@ export function getAdminRole(params) {
     url: Api.adminRole,
     method: RequestEnum.GET,
     params,
-  });
+  })
 }
 
 /**
@@ -37,10 +38,7 @@ export function delAdminRole(id: string) {
   return http.request({
     url: [Api.adminRole, id].join('/'),
     method: RequestEnum.DELETE,
-  }, {
-    isShowErrorMessage: true, // 是否显示错误提示信息
-    successMessageText: '删除成功'
-  });
+  })
 }
 
 /**
@@ -52,12 +50,8 @@ export function patchAdminRole(id, params) {
     url: [Api.adminRole, id].join('/'),
     method: RequestEnum.PATCH,
     params,
-  }, {
-    isShowErrorMessage: true, // 是否显示错误提示信息
-    successMessageText: '修改成功'
-  });
+  })
 }
-
 
 /**
  * 新建角色
@@ -68,8 +62,5 @@ export function postAdminRole(params) {
     url: Api.adminRole,
     method: RequestEnum.POST,
     params,
-  }, {
-    isShowErrorMessage: true, // 是否显示错误提示信息
-    successMessageText: '创建成功'
-  });
+  })
 }

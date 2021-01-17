@@ -157,13 +157,6 @@ export default defineComponent({
         icon: 'SettingOutlined',
         tips: '网站设置',
       },
-      {
-        icon: 'LockOutlined',
-        tips: '锁屏',
-        eventObject: {
-          click: () => store.commit('lockscreen/setLock', true),
-        },
-      },
     ]
 
     return {

@@ -44,6 +44,7 @@ import { IconFont } from '@/components/iconfont'
 
 export default defineComponent({
   components: {
+    [Menu.name]: Menu,
     'a-sub-menu': Menu.SubMenu,
     'a-menu-item': Menu.Item,
     MenuFoldOutlined,

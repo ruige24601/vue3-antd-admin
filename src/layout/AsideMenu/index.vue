@@ -40,6 +40,7 @@ import { routes } from '@/router'
 
 export default defineComponent({
   components: {
+    [Menu.name]: Menu,
     MenuItem,
     'a-sub-menu': Menu.SubMenu,
     'a-menu-item': Menu.Item,

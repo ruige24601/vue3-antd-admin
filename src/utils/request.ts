@@ -2,7 +2,6 @@ import axios from 'axios'
 import store from '@/store'
 import { createStorage } from '@/utils/Storage'
 import notification from 'ant-design-vue/es/notification'
-import { VueAxios } from './axios'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 import router from '@/router'
 import { message } from 'ant-design-vue'
@@ -49,13 +48,6 @@ request.interceptors.response.use(response => {
   return response.data
 }, errorHandler)
 
-const installer = {
-  vm: {},
-  install(Vue) {
-    Vue.use(VueAxios, request)
-  },
-}
-
 // 异常拦截处理器
 function errorHandler(error) {
   if (error.response) {
@@ -92,5 +84,3 @@ const codeMessage = {
 }
 
 export default request
-
-export { installer as VueAxios, request as axios }

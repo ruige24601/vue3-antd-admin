@@ -70,9 +70,7 @@
                 (advanced && { float: 'right', overflow: 'hidden' }) || {}
               "
             >
-              <a-button
-                type="primary"
-                @click="$refs.tableRef.refreshTableData()"
+              <a-button type="primary" @click="tableRef.refreshTableData()"
                 >查询</a-button
               >
               <a-button style="margin-left: 8px" @click="handleReset"
@@ -137,7 +135,7 @@
       ref="createModal"
       v-model:visible="visible"
       :model="mdl"
-      @submitOk="$refs.tableRef.refreshTableData()"
+      @submitOk="tableRef.refreshTableData()"
     ></CreateForm>
     <!-- @cancel="handleCancel" -->
     <!-- @ok="handleOk" -->
@@ -158,6 +156,8 @@ import {
   Menu,
   Badge,
   Divider,
+  Input,
+  Form,
 } from 'ant-design-vue'
 import { reactive, ref, toRefs } from 'vue'
 import {
@@ -171,7 +171,7 @@ import {
 // import StandardTable from '@/components/standard-table/table'
 import StandardTable from '@/components/StandardTable'
 import Ellipsis from '@/components/Ellipsis/index.tsx'
-import * as API from '@/api/manage'
+import * as API from './service'
 import CreateForm from './CreateForm.vue'
 import { RequestPagination } from '@/types/base'
 
@@ -257,8 +257,11 @@ export default {
     Col,
     [Select.name]: Select,
     ASelectOption: Select.Option,
+    [Input.name]: Input,
     [InputNumber.name]: InputNumber,
     [DatePicker.name]: DatePicker,
+    [Form.name]: Form,
+    [Form.Item.name]: Form.Item,
     UpOutlined,
     DownOutlined,
     PlusOutlined,

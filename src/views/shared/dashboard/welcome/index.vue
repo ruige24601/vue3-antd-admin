@@ -32,7 +32,6 @@ import {
   EditOutlined,
   EllipsisOutlined,
 } from '@ant-design/icons-vue'
-import HuaweiCharge from '@/components/lockscreen/huawei-charge.vue'
 import BrowserType from '@/utils/browser-type'
 import { useBattery } from '@/hooks/useBattery'
 import { useOnline } from '@/hooks/useOnline'
@@ -42,7 +41,6 @@ import { useStore } from 'vuex'
 export default defineComponent({
   name: 'welcome',
   components: {
-    HuaweiCharge,
     [Badge.name]: Badge,
     [Descriptions.name]: Descriptions,
     [Descriptions.Item.name]: Descriptions.Item,

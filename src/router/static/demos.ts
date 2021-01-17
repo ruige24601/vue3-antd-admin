@@ -25,7 +25,16 @@ const routes: Array<RouteRecordRaw> = [
         },
         // component: RouterTransition,
         // component: RouterView,
-        component: () => import('@/views/list/article.vue'),
+        component: () => import('@/views/shared/demos/list/TableList.vue'),
+      },
+      {
+        path: '/icons',
+        name: 'icons',
+        meta: {
+          title: 'icons',
+          icon: BorderRightOutlined,
+        },
+        component: () => import('@/views/shared/icons/index.vue'),
       },
       {
         path: 'custom-a-custom-modal',

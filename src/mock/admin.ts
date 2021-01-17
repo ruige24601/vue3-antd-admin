@@ -1,6 +1,6 @@
 import { RequestBody } from '@/types/base'
 import Mock from 'mockjs2'
-import { builder, getQueryParameters } from '../util'
+import { builder, getQueryParameters } from './_util'
 
 const totalCount = 5701
 
@@ -230,6 +230,92 @@ const getAdminDictConfig = options => {
     message: '请求成功',
   }
 }
+
+const getAdminRole = options => {
+  return {
+    result: {
+      data: [
+        {
+          id: 2,
+          createdAt: '2020-11-11T14:31:52.024Z',
+          updatedAt: '2021-01-15T12:35:40.000Z',
+          title: '系统审计员2q',
+          description: 'wdf',
+        },
+        {
+          id: 3,
+          createdAt: '2020-11-11T14:32:40.512Z',
+          updatedAt: '2021-01-11T01:57:49.000Z',
+          title: '系统管理员',
+          description: '系统管理员。',
+        },
+        {
+          id: 13,
+          createdAt: '2020-11-26T06:28:06.454Z',
+          updatedAt: '2021-01-05T09:04:04.000Z',
+          title: '草帽团',
+          description: '草帽海贼团1',
+        },
+        {
+          id: 15,
+          createdAt: '2020-11-28T06:51:56.827Z',
+          updatedAt: '2021-01-08T06:10:59.000Z',
+          title: '员工',
+          description: '员工',
+        },
+        {
+          id: 16,
+          createdAt: '2020-11-30T08:17:17.918Z',
+          updatedAt: '2020-11-30T08:17:17.918Z',
+          title: '船长',
+          description: '老大',
+        },
+        {
+          id: 17,
+          createdAt: '2020-11-30T08:31:17.816Z',
+          updatedAt: '2020-11-30T08:31:17.816Z',
+          title: '123',
+          description: 'wqe',
+        },
+        {
+          id: 18,
+          createdAt: '2020-11-30T14:35:05.463Z',
+          updatedAt: '2021-01-11T09:19:28.000Z',
+          title: 'baba111',
+          description: '',
+        },
+        {
+          id: 19,
+          createdAt: '2020-12-04T12:49:08.579Z',
+          updatedAt: '2020-12-29T02:45:30.000Z',
+          title: '路人王',
+          description: '噜噜噜',
+        },
+        {
+          id: 20,
+          createdAt: '2020-12-06T15:28:09.200Z',
+          updatedAt: '2020-12-16T10:20:52.000Z',
+          title: 'nami',
+          description: '123',
+        },
+        {
+          id: 21,
+          createdAt: '2020-12-09T03:02:46.722Z',
+          updatedAt: '2020-12-16T09:19:40.000Z',
+          title: '12132123',
+          description: '',
+        },
+      ],
+      total: 12,
+      pageNumber: '1',
+      pageSize: '10',
+    },
+    code: 0,
+    message: '请求成功',
+  }
+}
+
 Mock.mock(/\/admin\/account/, 'get', getAdminAccount)
 Mock.mock(/\/admin\/access/, 'get', getAdminAccess)
 Mock.mock(/\/admin\/dict_config/, 'get', getAdminDictConfig)
+Mock.mock(/\/admin\/role/, 'get', getAdminRole)
