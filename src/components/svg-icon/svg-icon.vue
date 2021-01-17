@@ -1,22 +1,22 @@
 <template>
-  <svg :class="svgClass" aria-hidden="true">
-    <use :xlink:href="iconName"/>
+  <svg class="svg-icon" aria-hidden="true">
+    <use :xlink:href="iconName" />
   </svg>
 </template>
 
 <script lang="ts">
-import {defineComponent, computed} from 'vue'
+import { defineComponent, computed } from 'vue'
 
-const importAll = (requireContext: __WebpackModuleApi.RequireContext) => requireContext.keys().forEach(requireContext);
+const importAll = (requireContext: __WebpackModuleApi.RequireContext) =>
+  requireContext.keys().forEach(requireContext)
 try {
-  importAll(require.context('@/assets/icons', true, /\.svg$/));
+  importAll(require.context('@/assets/icons', true, /\.svg$/))
 } catch (error) {
-  console.log(error);
+  console.log(error)
 }
 
 interface SvgIcon {
-  iconClass: string;
-  className?: string;
+  iconClass: string
 }
 
 export default defineComponent({
@@ -24,23 +24,16 @@ export default defineComponent({
   props: {
     iconClass: {
       type: String,
-      required: true
+      required: true,
     },
-    className: {
-      type: String,
-      default: ''
-    }
   },
   setup(props: SvgIcon) {
-
     const iconName = computed(() => `#icon-${props.iconClass}`)
-    const svgClass = computed(() => 'svg-icon')
 
     return {
       iconName,
-      svgClass
     }
-  }
+  },
 })
 </script>
 
