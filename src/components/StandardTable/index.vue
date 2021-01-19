@@ -25,6 +25,7 @@ import { PaginationProps } from 'ant-design-vue/lib/pagination/Pagination'
 import { usePages } from '@/hooks'
 import { ResultBody, ResponsePagination } from '@/types/base'
 import T from 'ant-design-vue/es/table/Table'
+import useDragCol from '../dynamic-table/utils/useDragCol'
 
 type PageOption = Partial<typeof PaginationProps>
 
@@ -41,6 +42,7 @@ export default defineComponent({
       // 获取列表数据函数API
       type: Function,
       require: true,
+      default: () => () => {},
     },
     pageOption: {
       // 分页参数
@@ -53,6 +55,8 @@ export default defineComponent({
   },
   setup(props, { attrs, emit, slots }) {
     const { pageOption } = usePages()
+    useDragCol(props.columns)
+
     const state = reactive({
       dataSource: [], // 表格数据
       pageOption: Object.assign(pageOption, props.pageOption), // 表格分页

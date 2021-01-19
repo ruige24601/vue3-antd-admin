@@ -25,34 +25,18 @@ export const routes: Array<RouteRecordRaw> = [
     name: 'login',
     component: () => import('@/views/shared/login/index.vue'),
   },
-
   {
-    path: '/error',
-    name: 'error',
-    redirect: '/error/404',
-    component: markRaw(RouterTransition),
+    path: '/error/404',
+    name: 'error/404',
+    component: () => import('@/views/shared/error/404.vue'),
     meta: {
       title: '错误页',
-      icon: 'EditOutlined',
-      hidden: true,
     },
-    children: [
-      {
-        path: '404',
-        name: `error-404`,
-        meta: {
-          title: '404',
-          icon: 'UserOutlined',
-        },
-        component: () => import('@/views/shared/error/404.vue'),
-      },
-    ],
   },
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     redirect: '/error/404',
-    component: () => import('@/views/shared/error/404.vue'),
   },
 ]
 

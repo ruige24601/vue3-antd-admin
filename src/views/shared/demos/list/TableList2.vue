@@ -70,7 +70,7 @@
                 (advanced && { float: 'right', overflow: 'hidden' }) || {}
               "
             >
-              <a-button type="primary" @click="refreshTableData()"
+              <a-button type="primary" @click="tableRef.refreshTableData()"
                 >查询</a-button
               >
               <a-button style="margin-left: 8px" @click="handleReset"
@@ -106,12 +106,13 @@
       </a-dropdown>
     </div>
 
-    <!-- :getListFunc="loadData" -->
-    <Table
+    <StandardTable
+      ref="tableRef"
       size="default"
       rowKey="callNo"
       :columns="columns"
-      :dataSource="dataSource"
+      :getListFunc="loadData"
+      bordered
     >
       <template #serial="{index}">
         <span>
@@ -129,13 +130,13 @@
         <a-divider type="vertical" />
         <a>订阅报警</a>
       </template>
-    </Table>
+    </StandardTable>
 
     <CreateForm
       ref="createModal"
       v-model:visible="visible"
       :model="mdl"
-      @submitOk="refreshTableData()"
+      @submitOk="tableRef.refreshTableData()"
     ></CreateForm>
   </div>
 </template>
@@ -154,7 +155,6 @@ import {
   Divider,
   Input,
   Form,
-  Table,
 } from 'ant-design-vue'
 import { reactive, ref, toRefs, h } from 'vue'
 import {
@@ -168,20 +168,14 @@ import StandardTable from '@/components/StandardTable/index.vue'
 import Ellipsis from '@/components/Ellipsis'
 import * as API from './service'
 import CreateForm from './CreateForm.vue'
-import { RequestPagination, ResultBody } from '@/types/base'
+import { RequestPagination } from '@/types/base'
 import { QueryParam, TableItem } from './data'
 import { ColumnProps } from 'ant-design-vue/es/table/interface'
-import { usePages, PageOption } from '@/hooks/usePages'
-import { PaginationProps } from 'ant-design-vue/lib/pagination/Pagination'
-
 interface State {
   mdl: Partial<TableItem>
   advanced: boolean
   queryParam: QueryParam
   visible: boolean
-  pageOption: PageOption
-  loading: boolean
-  dataSource: TableItem[]
 }
 interface Column extends ColumnProps {
   slots?: {
@@ -251,8 +245,19 @@ const statusMap = {
   },
 }
 
+const dataSource = {
+  key: '1',
+  id: '1',
+  no: '1',
+  description: '这是一段描述',
+  callNo: '1',
+  status: '1',
+  updatedAt: '1',
+  editable: false,
+}
+
 export default {
-  name: 'TableList',
+  name: 'TableList2',
   components: {
     // [Row.name]: Row,
     Row,
@@ -278,11 +283,8 @@ export default {
     [Badge.name]: Badge,
     [Divider.name]: Divider,
     CreateForm,
-    Table,
   },
   setup() {
-    const { pageOption } = usePages()
-
     const state: State = reactive({
       // 高级搜索 展开/关闭
       advanced: false,
@@ -292,10 +294,8 @@ export default {
       },
       visible: false,
       mdl: {},
-      dataSource: [], // 表格数据
-      pageOption: Object.assign(pageOption), // 表格分页
-      loading: false, // 表格加载
     })
+    const tableRef = ref()
     const createModal = ref()
 
     function toggleAdvanced() {
@@ -305,49 +305,21 @@ export default {
     const statusFilter = type => statusMap[type].text
     const statusTypeFilter = type => statusMap[type].status
 
-    // 获取表格数据
-    const refreshTableData = async (params: RequestPagination = {}) => {
-      params = {
-        pageNumber: state.pageOption.current,
-        pageSize: state.pageOption.pageSize,
-        ...params,
-      }
-      state.loading = true
-      const { responseEntity, responsePagination } = await API.getServiceList?.(
-        {
-          requestPagination: {
-            ...params,
-          },
-          requestEntity: {
-            ...state.queryParam,
-          },
-        }
-      ).finally(() => (state.loading = false))
-      responsePagination &&
-        Object.assign(state.pageOption, {
-          pageSize: responsePagination.pageSize,
-          total: responsePagination.totalCount,
-        })
-      state.dataSource = responseEntity
-    }
-
-    refreshTableData()
-
-    // 分页改变
-    const paginationChange = (pagination: PageOption, filters, sorter) => {
-      state.pageOption = {
-        ...state.pageOption,
-        ...pagination,
-      }
-      refreshTableData({
-        pageSize: pagination.pageSize,
-        pageNumber: pagination.current,
+    const loadData = (parameter: RequestPagination) => {
+      return API.getServiceList({
+        requestPagination: {
+          ...parameter,
+        },
+        requestEntity: {
+          ...state.queryParam,
+        },
+      }).then(res => {
+        return res
       })
     }
-
     const handleReset = () => {
       state.queryParam = {}
-      refreshTableData()
+      tableRef.value.refreshTableData()
     }
     const handleAdd = () => {
       state.mdl = {}
@@ -360,15 +332,18 @@ export default {
 
     return {
       ...toRefs(state),
+      state,
       toggleAdvanced,
       columns,
       statusFilter,
       statusTypeFilter,
-      refreshTableData,
+      loadData,
       handleReset,
+      tableRef,
       handleAdd,
       handleEdit,
       createModal,
+      dataSource,
     }
   },
 }

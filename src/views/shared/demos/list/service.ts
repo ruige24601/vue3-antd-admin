@@ -1,9 +1,9 @@
 import { RequestBody, ResultBody } from '@/types/base'
 import http from '@/utils/request'
-import { QueryParam, ServiceDetail } from './data'
+import { QueryParam, ServiceDetail, TableItem } from './data'
 export function getServiceList(
   parameter: RequestBody<QueryParam>
-): Promise<ResultBody<any>> {
+): Promise<ResultBody<TableItem[]>> {
   return http.request({
     url: '/service/list',
     method: 'post',

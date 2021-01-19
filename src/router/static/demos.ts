@@ -3,12 +3,10 @@ import { RouterTransition } from '@/components/transition'
 import { markRaw } from 'vue'
 import { BorderRightOutlined } from '@ant-design/icons-vue'
 
-const routeName = 'demos'
-
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/demos',
-    name: routeName,
+    name: '/demos',
     redirect: '/demos/table-list',
     component: markRaw(RouterTransition),
     meta: {
@@ -17,8 +15,8 @@ const routes: Array<RouteRecordRaw> = [
     },
     children: [
       {
-        path: 'table-list',
-        name: `${routeName}-table-list`,
+        path: '/demos/table-list',
+        name: '/demos/table-list',
         meta: {
           title: '查询表格',
           icon: BorderRightOutlined,
@@ -28,53 +26,73 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/shared/demos/list/TableList.vue'),
       },
       {
-        path: '/icons',
-        name: 'icons',
+        path: '/demos/table-list2',
+        name: `/demos/table-list2`,
+        meta: {
+          title: '查询表格2',
+          icon: BorderRightOutlined,
+        },
+        // component: RouterTransition,
+        // component: RouterView,
+        component: () => import('@/views/shared/demos/list/TableList2.vue'),
+      },
+      {
+        path: '/demos/icons',
+        name: '/demos/icons',
+        redirect: '/demos/list-icons',
         meta: {
           title: 'icons',
           icon: BorderRightOutlined,
         },
-        component: () => import('@/views/shared/icons/index.vue'),
+        component: RouterView,
+        children: [
+          {
+            path: '/demos/list-icons',
+            name: '/demos/list-icons',
+            meta: {
+              title: 'list-icons',
+              icon: 'icon-zhuzhuangtu',
+            },
+            component: () => import('@/views/shared/icons/index.vue'),
+          },
+          {
+            path: '/demos/custom-icons',
+            name: `/demos/custom-icons`,
+            meta: {
+              title: '自定义图标',
+              icon: 'icon-zhuomian',
+            },
+            component: () => import('@/views/shared/demos/icons/Iconfont.vue'),
+          },
+        ],
       },
       {
-        path: 'custom-a-custom-modal',
-        name: `${routeName}-custom-modal`,
+        path: '/demos/custom-a-custom-modal',
+        name: `/demos/custom-modal`,
         meta: {
           title: '自定义模态框',
           icon: 'icon-zhuomian',
-          keepAlive: true,
         },
         component: () => import('@/views/shared/demos/custom-modal.vue'),
       },
       {
-        path: 'button',
-        name: `${routeName}-button`,
+        path: '/demos/button',
+        name: `/demos/button`,
         meta: {
           title: '按钮的扩展',
           icon: 'icon-zhuomian',
-          keepAlive: true,
         },
         component: () => import('@/views/shared/demos/button.vue'),
       },
       {
-        path: 'form',
-        name: `${routeName}-form`,
+        path: '/demos/form',
+        name: `/demos/form`,
         meta: {
           title: '验证表单',
           icon: 'icon-zhuomian',
           // keepAlive: false,
         },
         component: () => import('@/views/shared/demos/form/rule-form.vue'),
-      },
-      {
-        path: 'icons',
-        name: `${routeName}-icons`,
-        meta: {
-          title: '自定义图标',
-          icon: 'icon-zhuomian',
-          keepAlive: true,
-        },
-        component: () => import('@/views/shared/demos/icons/Iconfont.vue'),
       },
     ],
   },

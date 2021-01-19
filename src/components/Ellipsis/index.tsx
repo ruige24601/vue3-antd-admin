@@ -4,9 +4,9 @@ import { Tooltip } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'Ellipsis',
-  components: {
-    Tooltip,
-  },
+  // components: {
+  //   Tooltip,
+  // },
   props: {
     prefixCls: {
       type: String,
