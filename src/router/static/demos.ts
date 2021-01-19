@@ -32,8 +32,6 @@ const routes: Array<RouteRecordRaw> = [
           title: '查询表格2',
           icon: BorderRightOutlined,
         },
-        // component: RouterTransition,
-        // component: RouterView,
         component: () => import('@/views/shared/demos/list/TableList2.vue'),
       },
       {
@@ -51,7 +49,7 @@ const routes: Array<RouteRecordRaw> = [
             name: '/demos/list-icons',
             meta: {
               title: 'list-icons',
-              icon: 'icon-zhuzhuangtu',
+              icon: BorderRightOutlined,
             },
             component: () => import('@/views/shared/icons/index.vue'),
           },

@@ -7,14 +7,23 @@
     >
       <template v-slot:title>
         <span>
-          <icon-font style="color: aliceblue" :type="menuInfo.meta.icon" />
+          <!-- <icon-font style="color: aliceblue" :type="menuInfo.meta.icon" /> -->
+          <icon-font
+            :type="menuInfo.meta.icon"
+            v-if="typeof menuInfo.meta.icon === 'string'"
+          />
+          <component :is="menuInfo.meta.icon" v-else />
           <span>{{ menuInfo.meta.title }}</span>
         </span>
       </template>
       <template v-for="item in menuInfo.children" :key="item.name">
         <template v-if="!item.children">
           <a-menu-item :key="item.name">
-            <icon-font style="color: aliceblue" :type="item.meta.icon" />
+            <icon-font
+              :type="menuInfo.meta.icon"
+              v-if="typeof menuInfo.meta.icon === 'string'"
+            />
+            <component :is="menuInfo.meta.icon" v-else />
             <span>{{ item.meta.title }}</span>
           </a-menu-item>
         </template>

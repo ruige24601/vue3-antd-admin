@@ -1,7 +1,7 @@
 <template>
   <div class="logo">
     <img src="~@/assets/images/logo.png" alt="" />
-    <h3 v-show="!collapsed" class="title">建设银行报智慧媒体系统</h3>
+    <h3 v-show="!collapsed" class="title">后台管理系统模板</h3>
   </div>
 </template>
 
