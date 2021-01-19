@@ -76,6 +76,7 @@
               <a-button style="margin-left: 8px" @click="handleReset"
                 >重置</a-button
               >
+
               <a @click="toggleAdvanced" style="margin-left: 8px">
                 {{ advanced ? '收起' : '展开' }}
                 <UpOutlined v-if="advanced" />
@@ -173,7 +174,6 @@ import { QueryParam, TableItem } from './data'
 import { ColumnProps } from 'ant-design-vue/es/table/interface'
 import { usePages, PageOption } from '@/hooks/usePages'
 import { PaginationProps } from 'ant-design-vue/lib/pagination/Pagination'
-
 interface State {
   mdl: Partial<TableItem>
   advanced: boolean
@@ -270,7 +270,7 @@ export default {
     PlusOutlined,
     DeleteOutlined,
     LockOutlined,
-    [Dropdown.name]: Dropdown,
+    // [Dropdown.name]: Dropdown,
     [Menu.name]: Menu,
     [Menu.Item.name]: Menu.Item,
     StandardTable,

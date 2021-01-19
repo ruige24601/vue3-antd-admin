@@ -1,6 +1,6 @@
 import { markRaw } from 'vue'
 import { RouteRecordRaw } from 'vue-router'
-import { RouterTransition } from '@/components/transition'
+import { RouterTransition } from '@/components/RouterTransition'
 import { h } from 'vue'
 
 const routes: Array<RouteRecordRaw> = [

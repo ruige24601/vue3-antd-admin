@@ -22,11 +22,11 @@ module.exports = {
     requireModuleExtension: true, // 是否开启CSSmodule并保留xxx.module.css后缀
     loaderOptions: {
       less: {
-        javascriptEnabled: true
+        javascriptEnabled: true,
       },
-      sass: { additionalData: `@import "@/styles/global.scss";` }
+      sass: { additionalData: `@import "@/styles/global.scss";` },
     },
-    sourceMap: true
+    sourceMap: true,
   },
   chainWebpack: config => {
     // 配置相关loader，支持修改，添加和替换相关的loader
@@ -58,7 +58,7 @@ module.exports = {
       .use('svg-sprite-loader')
       .loader('svg-sprite-loader')
       .options({
-        symbolId: 'icon-[name]'
+        symbolId: 'icon-[name]',
       })
 
     // config.module
@@ -73,13 +73,12 @@ module.exports = {
       .plugin('fork-ts-checker')
       .use(require('fork-ts-checker-webpack-plugin'), [
         {
-          typescript: false
-        }
+          typescript: false,
+        },
       ])
-    config.devtool('source-map')
+    config.devtool('eval-cheap-module-source-map')
   },
   configureWebpack: config => {
-    config.devtool = 'source-map'
     if (!isDev) {
       config.plugins.push(
         new UglifyJsPlugin({
@@ -88,12 +87,12 @@ module.exports = {
             compress: {
               drop_debugger: true, // 注释console
               drop_console: true,
-              pure_funcs: ['console.log'] // 移除console
-            }
+              pure_funcs: ['console.log'], // 移除console
+            },
           },
           extractComments: false, // 是否将注释提取到一个单独的文件中
           sourceMap: false,
-          parallel: true
+          parallel: true,
         })
         // new CompressionPlugin({
         //     /* [file]被替换为原始资产文件名。
@@ -149,7 +148,7 @@ module.exports = {
               },
               name: 'chunk-vendors',
               priority: 10,
-              enforce: true
+              enforce: true,
             },
             vue: {
               test(module) {
@@ -161,15 +160,15 @@ module.exports = {
               },
               name: 'chunk-vuetify',
               priority: 9,
-              enforce: true
+              enforce: true,
             },
             common: {
               name: 'chunk-common',
               minChunks: 2,
-              minSize: 30000
-            }
-          }
-        }
+              minSize: 30000,
+            },
+          },
+        },
       }
     }
   },
@@ -180,9 +179,9 @@ module.exports = {
         // target: 'http://localhost:8888',
         changeOrigin: true,
         pathRewrite: {
-          '^/api': '/api/v1'
-        }
-      }
-    }
-  }
+          '^/api': '/api/v1',
+        },
+      },
+    },
+  },
 }

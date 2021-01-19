@@ -7,7 +7,7 @@ import { App, markRaw } from 'vue'
 
 import staticRoutes from './static'
 import dynamicRoutes from './dynamic'
-import { RouterTransition } from '@/components/transition'
+import { RouterTransition } from '@/components/RouterTransition'
 
 export const routes: Array<RouteRecordRaw> = [
   {

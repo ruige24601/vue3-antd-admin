@@ -95,7 +95,7 @@
     </a-tabs>
     <div class="tabs-view-content">
       <a-card>
-        <router-transition />
+        <RouterTransition />
       </a-card>
     </div>
   </div>
@@ -105,7 +105,7 @@
 import { defineComponent, reactive, computed, toRefs, unref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import components from '@/layout/tabs/components'
-import { RouterTransition } from '@/components/transition'
+import { RouterTransition } from '@/components/RouterTransition'
 import { createStorage } from '@/utils/Storage'
 import { TABS_ROUTES } from '@/store/mutation-types'
 import { createNamespacedHelpers, useStore } from 'vuex'

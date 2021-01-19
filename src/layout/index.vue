@@ -19,7 +19,7 @@
         <!--      内容区域start-->
         <a-layout-content class="layout-content">
           <!-- <tabs-view /> -->
-          <a-card><router-transition /></a-card>
+          <a-card><RouterTransition /></a-card>
         </a-layout-content>
         <!--      内容区域end-->
         <!--      页脚start-->
@@ -38,7 +38,7 @@ import { TabsView } from './tabs'
 import AsideMenu from './AsideMenu/index.vue'
 import PageHeader from './header/index.vue'
 import PageFooter from './footer'
-import { RouterTransition } from '@/components/transition'
+import { RouterTransition } from '@/components/RouterTransition'
 
 export default defineComponent({
   name: 'Layout',

@@ -1,7 +1,7 @@
 <template>
   <div class="login-box">
     <div class="login-logo">
-      <svg-icon icon-class="logo" />
+      <SvgIcon icon-class="logo" />
       <!--      <img src="~@/assets/images/logo.png" alt="">-->
       <h1>Antd Admin</h1>
     </div>
@@ -57,7 +57,7 @@ import { useStore } from 'vuex'
 
 import { login } from '@/api/system/user'
 
-import { SvgIcon } from '@/components/svg-icon'
+import { SvgIcon } from '@/components/SvgIcon'
 
 export default defineComponent({
   name: 'login',

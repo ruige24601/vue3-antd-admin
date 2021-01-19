@@ -14,7 +14,7 @@ import { defineComponent, watch, ref, KeepAlive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 export default defineComponent({
-  name: 'router-transition',
+  name: 'RouterTransition',
   components: {
     KeepAlive,
   },

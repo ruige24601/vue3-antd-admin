@@ -1,6 +1,6 @@
 import { markRaw } from 'vue'
 import { RouteRecordRaw, RouterView } from 'vue-router'
-import { RouterTransition } from '@/components/transition'
+import { RouterTransition } from '@/components/RouterTransition'
 import { h } from 'vue'
 import { BorderRightOutlined } from '@ant-design/icons-vue'
 const routeName = 'dashboard'

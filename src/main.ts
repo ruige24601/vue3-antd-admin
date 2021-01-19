@@ -16,7 +16,7 @@ const app = createApp(App)
 
 // 注册全局常用的ant-design-vue组件
 setupAntd(app)
-// 注册全局自定义组件,如：<svg-icon />
+// 注册全局自定义组件,如：<SvgIcon />
 setupCustomComponents(app)
 // 注册全局自定义指令，如：v-permission权限指令
 setupDirectives(app)
